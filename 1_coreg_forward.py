@@ -10,9 +10,17 @@ import mne
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
-MAIN_DIR = "/Users/alpmac/Desktop/fixfwd/Participants"
-PLOTS_2D = "/Users/alpmac/Code Works/PerinelliFixed/Plots/2D_electrode_positions_plots"
-ELECTRODE_AND_FORWARD_PLOTS = "/Users/alpmac/Code Works/PerinelliFixed/Plots/3D_electrode_and_forward"
+# Get the directory where the script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# MAIN_DIR is outside the project, so keep as absolute path
+MAIN_DIR = os.path.join(SCRIPT_DIR, "Participants")
+
+# Use relative paths for directories within the project
+PLOTS_DIR = os.path.join(SCRIPT_DIR, "Plots")
+PLOTS_2D = os.path.join(PLOTS_DIR, "2D_electrode_positions_plots")
+ELECTRODE_AND_FORWARD_PLOTS = os.path.join(
+    PLOTS_DIR, "3D_electrode_and_forward")
 
 fsl_dir = '~/fsl'  # This is the path to the fsl installation
 source_recon.setup_fsl(fsl_dir)
