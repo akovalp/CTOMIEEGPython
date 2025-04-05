@@ -1,3 +1,6 @@
 Plots/
 Participants/
+ParticipantPKL/
 .DS_Store
+debugviz.ipynb
+__pycache__/1_coreg_forward.cpython-38.pyc

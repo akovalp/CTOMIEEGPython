@@ -1,3 +1,4 @@
+# 1_coreg_forward.py
 from scipy import io
 import shutil
 import sys
@@ -55,6 +56,7 @@ def get_subjects(participants_dir, conditions=["EC", "EO"]):
             subjects_dict[subject][f"{condition}_save_dir"] = eeg_save_dir
             eeg_saved_file = os.path.join(eeg_save_dir, "raw.fif")
             subjects_dict[subject][f"{condition}_saved_file"] = eeg_saved_file
+
             # Other paths
             localizer_path = os.path.join(
                 participants_dir, subject, "Localizer", f"{subject}.mat")
@@ -71,6 +73,7 @@ def get_subjects(participants_dir, conditions=["EC", "EO"]):
             forward_path = os.path.join(
                 recon_dir, subject, "rhino", "model-fwd.fif")
             subjects_dict[subject]["forward_path"] = forward_path
+
     return subjects_dict
 
 
@@ -186,6 +189,9 @@ def plot_forward_model(subject_data):
         marker=dict(color='dodgerblue', size=3, opacity=0.8),
         name='Source Space'
     ))
+    hover_texts = [f"{name}<br>x: {x:.4f}<br>y: {y:.4f}<br>z: {z:.4f}"
+                   for name, x, y, z in zip(electrode_names, chan_x, chan_y, chan_z)]
+
     fig.add_trace(go.Scatter3d(
         x=chan_x,
         y=chan_y,
@@ -194,7 +200,7 @@ def plot_forward_model(subject_data):
         marker=dict(color='red', size=5, opacity=0.9),
         text=electrode_names,
         textposition="top center",
-        hoverinfo='text',
+        hoverinfo=hover_texts,
         name='Electrodes'
     ))
     fig.update_layout(
