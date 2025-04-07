@@ -4,7 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from tqdm import tqdm
+from pprint import pprint
 import mne
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MAIN_DIR = os.path.join(SCRIPT_DIR, "Participants")
+# FUNCTION - 1 : Get the subjects
 
 
 def get_subjects(participants_dir, conditions=["EC", "EO"], bands=["alpha", "beta", "theta"]):
@@ -60,3 +64,85 @@ def get_subjects(participants_dir, conditions=["EC", "EO"], bands=["alpha", "bet
                 subjects_dict[subject][f"{condition}_{band}_path"] = filtered_path
 
     return subjects_dict
+
+
+# FUNCTION - 2 : Compute the noise covariance
+def compute_and_save_noise_covariance(subjects_dict):
+    """
+    Compute and save noise covariance matrices for each subject, condition and frequency band.
+    Always recomputes and overwrites existing files.
+
+    Args:
+        subjects_dict: Dictionary containing subject data paths
+    """
+    # Define frequency bands and conditions
+    bands = ['alpha', 'beta', 'theta']
+    conditions = ['EC', 'EO']
+
+    for subject_id, subject_data in tqdm(subjects_dict.items()):
+        print(f"\nProcessing subject: {subject_id}")
+
+        # Create output directory for noise covariance matrices
+        noise_cov_dir = os.path.join(
+            SCRIPT_DIR, "Noise_Covariances", subject_id)
+        os.makedirs(noise_cov_dir, exist_ok=True)
+        print(f"Created/verified noise covariance directory: {noise_cov_dir}")
+
+        # Process each condition and frequency band
+        for condition in conditions:
+            print(f"\nProcessing condition: {condition}")
+            for band in bands:
+                # Get path to filtered data
+                raw_path = subject_data[f"{condition}_{band}_path"]
+                print(f"\nProcessing band: {band}")
+                print(f"Reading filtered data from: {raw_path}")
+
+                # Define output file path
+                noise_cov_path = os.path.join(
+                    noise_cov_dir, f"{condition}_{band}_noise_cov.fif")
+                print(
+                    f"Output noise covariance will be saved to: {noise_cov_path}")
+
+                # Check if input file exists
+                if os.path.exists(raw_path):
+                    print(f"Confirmed input file exists: {raw_path}")
+                    # Check if file already exists - but always recompute
+                    if os.path.exists(noise_cov_path):
+                        print(
+                            f"Noise covariance file exists for {condition}_{band} for {subject_id}, but will be recomputed and overwritten")
+
+                    print(
+                        f"Computing noise covariance for {condition}_{band} for {subject_id}")
+
+                    try:
+                        # Load raw data
+                        print(f"Loading raw data from: {raw_path}")
+                        raw = mne.io.read_raw_fif(raw_path, preload=True)
+                        print(
+                            f"Successfully loaded raw data, shape: {raw.get_data().shape}")
+
+                        # Compute noise covariance
+                        print(f"Computing noise covariance with method='empirical'")
+                        noise_cov = mne.compute_raw_covariance(
+                            raw, tmin=0, tmax=None, method='empirical')
+                        print(f"Noise covariance computed successfully")
+
+                        # Save noise covariance
+                        print(f"Saving noise covariance to: {noise_cov_path}")
+                        noise_cov.save(noise_cov_path, overwrite=True)
+                        print(
+                            f"Successfully saved noise covariance to {noise_cov_path}")
+                    except Exception as e:
+                        print(
+                            f"Error processing {condition}_{band} for {subject_id}: {str(e)}")
+                        print(f"Failed file path: {raw_path}")
+                else:
+                    print(f"File not found: {raw_path}")
+
+        print(f"Completed processing for {subject_id}")
+
+# =#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=#
+
+
+subjects_dict = get_subjects(MAIN_DIR)
+compute_and_save_noise_covariance(subjects_dict)

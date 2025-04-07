@@ -189,8 +189,6 @@ def plot_forward_model(subject_data):
         marker=dict(color='dodgerblue', size=3, opacity=0.8),
         name='Source Space'
     ))
-    hover_texts = [f"{name}<br>x: {x:.4f}<br>y: {y:.4f}<br>z: {z:.4f}"
-                   for name, x, y, z in zip(electrode_names, chan_x, chan_y, chan_z)]
 
     fig.add_trace(go.Scatter3d(
         x=chan_x,
@@ -200,7 +198,7 @@ def plot_forward_model(subject_data):
         marker=dict(color='red', size=5, opacity=0.9),
         text=electrode_names,
         textposition="top center",
-        hoverinfo=hover_texts,
+        hoverinfo="text",
         name='Electrodes'
     ))
     fig.update_layout(
@@ -221,6 +219,7 @@ def plot_forward_model(subject_data):
     )
     fig.write_html(os.path.join(
         ELECTRODE_AND_FORWARD_PLOTS, f"{subject_data['subject_id']}_forward_model.html"))
+
 # =#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=#
 
 

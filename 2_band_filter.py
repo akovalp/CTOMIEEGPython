@@ -120,6 +120,8 @@ def filter_and_save_frequency_bands(subjects_dict):
             print(f"Saving EO {band} filtered data to: {eo_save_path}")
             EO_raw.save(eo_save_path, overwrite=True)
 
+# =#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=##=#=#
+
 
 subjects_dict = get_subjects(MAIN_DIR)
 pprint(subjects_dict)
