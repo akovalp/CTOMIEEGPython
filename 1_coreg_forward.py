@@ -280,14 +280,28 @@ for subject in subjects_data:
 # SECTION 5 : Forward Model
 gridstep = 7
 for subject in subjects_data:
-    source_recon.rhino.forward_model(
-        subjects_data[subject]["recon_dir"],
-        subject,
-        gridstep=gridstep,
-        meg=False,
-        eeg=True,
-        model="Triple Layer",
-        verbose=True,
-    )
+    forward_path = subjects_data[subject]["forward_path"]
+
+    # Check if forward model already exists
+    if os.path.exists(forward_path):
+        print("-"*100)
+        print(f"Forward model found for {subject} at {forward_path}")
+        print(f"Skipping forward model computation for {subject}")
+        print("-"*100)
+    else:
+        print("-"*100)
+        print(f"Computing forward model for {subject}")
+        print("-"*100)
+        source_recon.rhino.forward_model(
+            subjects_data[subject]["recon_dir"],
+            subject,
+            gridstep=gridstep,
+            meg=False,
+            eeg=True,
+            model="Triple Layer",
+            verbose=True,
+        )
+
+    # Plot forward model regardless of whether it was computed or found
     plot_forward_model(subjects_data[subject])
 # !SECTION

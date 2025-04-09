@@ -6,8 +6,8 @@ from collections import Counter
 from pathlib import Path
 # Paths
 demographics_file = "/Users/alpmac/Desktop/PerinelliFixed/demographics.csv"
-combined_dir = "/Users/alpmac/Desktop/PerinelliFixed/CSV"
-output_dir = "/Users/alpmac/Desktop/PerinelliFixed/Grouped"
+combined_dir = "/Users/alpmac/PerinelliFixed/CSV"
+output_dir = "/Users/alpmac/PerinelliFixed/Grouped"
 # Make sure output directory exists
 os.makedirs(output_dir, exist_ok=True)
 

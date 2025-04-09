@@ -9,4 +9,5 @@ Noise_Covariances/
 __pycache__/1_coreg_forward.cpython-38.pyc
 __pycache__/
 timerseries.ipynb
-viz.ipynb
+*.ipynb
+*.csv

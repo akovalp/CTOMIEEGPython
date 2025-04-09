@@ -516,8 +516,8 @@ for subject in subjects_dict:
         FINAL_SOURCE_SPACE_DIR
     )
 
-"""     compute_source_time_courses_for_subject(
+    compute_source_time_courses_for_subject(
         subjects_dict[subject],
         transform_results['selected_vertices'],
         CSV_DIR
-    ) """
+    )
