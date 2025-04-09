@@ -162,6 +162,12 @@ Demographics information should be provided in a `demographics.csv` file with co
 - Gender (1=female, 2=male)
 - Age (categorical: 20-25, 60-65, 65-70, 70-75, 75-80)
 
+
+
+## Sample Analysis
+
+Sample analysis pipeline that will output graphs related to power differences can be found in `analysis.ipynb`
+
 ## References
 
 This pipeline implements the methodology from:
