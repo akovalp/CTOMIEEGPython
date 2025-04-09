@@ -98,7 +98,11 @@ older_groups = [
     'Female_75-80',
     'Male_75-80'
 ]
-base_dir = '/Users/alpmac/PerinelliFixed/Grouped'
+
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+base_dir = os.path.join(SCRIPT_DIR, "Grouped")
 
 
 def get_all_subjects(group):  # Standard function to get all subjects in a given group

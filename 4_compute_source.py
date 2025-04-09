@@ -9,8 +9,8 @@ from pprint import pprint
 import plotly.graph_objects as go
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MAIN_DIR = os.path.join(SCRIPT_DIR, "Participants")
-# This will be transformed for each subject to their own head shape combined with their electrode spaces
-ATLAS_FILE = "/Users/alpmac/Code Works/downloaderdeneme/selected_atlas_areas.txt"
+
+ATLAS_FILE = os.path.join(SCRIPT_DIR, "selected_atlas_areas.txt")
 CSV_DIR = os.path.join(SCRIPT_DIR, "CSV")
 # FUNCTION - 1 : Get the subjects
 
@@ -383,10 +383,6 @@ def visualize_source_space_interactive(subject_data, transform_results, output_d
         transform_results: Results from transform_atlas_coordinates_and_select_vertices
         output_dir: Directory to save the HTML file
     """
-    import os
-    import numpy as np
-    import mne
-    import plotly.graph_objects as go
 
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)

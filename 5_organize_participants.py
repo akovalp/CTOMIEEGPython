@@ -5,9 +5,11 @@ import pandas as pd
 from collections import Counter
 from pathlib import Path
 # Paths
-demographics_file = "/Users/alpmac/Desktop/PerinelliFixed/demographics.csv"
-combined_dir = "/Users/alpmac/PerinelliFixed/CSV"
-output_dir = "/Users/alpmac/PerinelliFixed/Grouped"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+demographics_file = os.path.join(SCRIPT_DIR, "demographics.csv")
+combined_dir = os.path.join(SCRIPT_DIR, "CSV")
+output_dir = os.path.join(SCRIPT_DIR, "Grouped")
 # Make sure output directory exists
 os.makedirs(output_dir, exist_ok=True)
 

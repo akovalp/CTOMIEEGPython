@@ -6,8 +6,10 @@ import os
 from tqdm import tqdm
 from pprint import pprint
 import mne
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 MAIN_DIR = os.path.join(SCRIPT_DIR, "Participants")
+
 # FUNCTION - 1 : Get the subjects
 
 
